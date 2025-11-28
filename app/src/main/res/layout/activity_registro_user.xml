@@ -72,6 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Nombre:"
                     android:textSize="20dp"
                     android:paddingTop="10dp"
@@ -86,6 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Apellido Paterno:"
                     android:textSize="20dp"
                     android:paddingTop="12dp"
@@ -101,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Apellido Materno:"
+                    android:textColor="@color/black"
                     android:textSize="20dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="5dp"/>
@@ -115,6 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Usuario:"
+                    android:textColor="@color/black"
                     android:textSize="20dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="5dp"/>
@@ -128,6 +132,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Email:"
                     android:textSize="20dp"
                     android:paddingTop="12dp"
@@ -144,6 +149,7 @@
                     android:layout_height="wrap_content"
                     android:text="Teléfono:"
                     android:textSize="20dp"
+                    android:textColor="@color/black"
                     android:paddingTop="12dp"
                     android:paddingBottom="5dp"/>
                 <EditText
@@ -156,6 +162,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Contraseña:"
                     android:textSize="20dp"
                     android:paddingTop="12dp"

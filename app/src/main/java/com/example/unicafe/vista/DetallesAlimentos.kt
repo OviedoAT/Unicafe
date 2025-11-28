@@ -2,72 +2,88 @@ package com.example.unicafe.vista
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.unicafe.R
 
 class DetallesAlimentos : AppCompatActivity() {
 
-    private lateinit var btnShopDetailAliments: ImageButton
-    private lateinit var btnMenuDetailAliements: ImageButton
-    private lateinit var imgDetailAliments: ImageView
-    private lateinit var txtNombDetailAliments: TextView
-    private lateinit var txtPrecioDetailAliments: TextView
-    private lateinit var txtDescripDetailAliments: TextView
-    private lateinit var btnOrdenarDetailAliments: Button
+    private lateinit var imgProductoDetalle: ImageView
+    private lateinit var txtNombreDetalle: TextView
+    private lateinit var txtDescripcionDetalle: TextView
+    private lateinit var txtPrecioDetalle: TextView
+    private lateinit var btnAgregarCarrito: Button
+    private lateinit var btnVolver: Button
+
+    private var productoId: Int = 0
+    private var productoNombre: String = ""
+    private var productoDescripcion: String = ""
+    private var productoPrecio: Double = 0.0
+    private var productoImagen: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_detalles_alimentos)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        // Inicializar vistas
+        inicializarVistas()
+
+        // Obtener datos del Intent
+        obtenerDatosProducto()
+
+        // Mostrar datos
+        mostrarDetallesProducto()
+
+        // Configurar listeners
+        configurarListeners()
+    }
+
+    private fun inicializarVistas() {
+        imgProductoDetalle = findViewById(R.id.imgDetailAliments)
+        txtNombreDetalle = findViewById(R.id.txtNombDetailAliments)
+        txtDescripcionDetalle = findViewById(R.id.txtDescripDetailAliments)
+        txtPrecioDetalle = findViewById(R.id.txtPrecioDetailAliments)
+        btnAgregarCarrito = findViewById(R.id.btnShopDetailAliments)
+        btnVolver = findViewById(R.id.btnMenuDetailAliements)
+    }
+
+    private fun obtenerDatosProducto() {
+        productoId = intent.getIntExtra("PRODUCTO_ID", 0)
+        productoNombre = intent.getStringExtra("PRODUCTO_NOMBRE") ?: ""
+        productoDescripcion = intent.getStringExtra("PRODUCTO_DESCRIPCION") ?: ""
+        productoPrecio = intent.getDoubleExtra("PRODUCTO_PRECIO", 0.0)
+        productoImagen = intent.getStringExtra("PRODUCTO_IMAGEN") ?: ""
+    }
+
+    private fun mostrarDetallesProducto() {
+        txtNombreDetalle.text = productoNombre
+        txtDescripcionDetalle.text = productoDescripcion
+        txtPrecioDetalle.text = "$$productoPrecio"
+
+    }
+
+    private fun configurarListeners() {
+        btnAgregarCarrito.setOnClickListener {
+            agregarAlCarrito()
         }
 
-        btnShopDetailAliments = findViewById(R.id.btnShopDetailAliments)
-        btnMenuDetailAliements = findViewById(R.id.btnMenuDetailAliements)
-        imgDetailAliments = findViewById(R.id.imgDetailAliments)
-        txtNombDetailAliments = findViewById(R.id.txtNombDetailAliments)
-        txtPrecioDetailAliments = findViewById(R.id.txtPrecioDetailAliments)
-        txtDescripDetailAliments = findViewById(R.id.txtDescripDetailAliments)
-        btnOrdenarDetailAliments = findViewById(R.id.btnOrdenarDetailAliments)
-
-        // Recibir datos del Intent
-        val nombre = intent.getStringExtra("NOMBRE") ?: "Producto"
-        val descripcion = intent.getStringExtra("DESCRIPCION") ?: ""
-        val precio = intent.getDoubleExtra("PRECIO", 0.0)
-        val imagenUrl = intent.getStringExtra("IMAGEN_URL") ?: ""
-
-        txtNombDetailAliments.text = nombre
-        txtPrecioDetailAliments.text = "$ $precio"
-        txtDescripDetailAliments.text = descripcion
-
-        if (imagenUrl.isNotBlank()) {
-            Glide.with(this)
-                .load(imagenUrl)
-                .into(imgDetailAliments)
-        }
-
-        btnMenuDetailAliements.setOnClickListener {
+        btnVolver.setOnClickListener {
             finish()
         }
+    }
 
-        btnShopDetailAliments.setOnClickListener {
-            Toast.makeText(this, "Carrito pendiente de implementar", Toast.LENGTH_SHORT).show()
-        }
+    private fun agregarAlCarrito() {
+        // Aquí implementarías la lógica para agregar al carrito
+        Toast.makeText(
+            this,
+            "Producto '$productoNombre' agregado al carrito",
+            Toast.LENGTH_SHORT
+        ).show()
 
-        btnOrdenarDetailAliments.setOnClickListener {
-            // Aquí podría ir una llamada a API para generar un pedido
-            Toast.makeText(this, "Orden registrada (pendiente implementar en BD)", Toast.LENGTH_SHORT).show()
-        }
+        // Opcional: volver a la pantalla anterior
+        // finish()
     }
 }

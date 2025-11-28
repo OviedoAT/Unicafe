@@ -75,6 +75,7 @@
                 android:text="Comida Caliente"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/item_producto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

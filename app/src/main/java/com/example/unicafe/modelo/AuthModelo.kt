@@ -7,7 +7,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthModelo(private val api: ApiService = ApiClient.apiService
+class AuthModelo(
+    private val api: ApiService = ApiClient.apiService
 ) : AuthContrato.Model {
 
     override fun login(

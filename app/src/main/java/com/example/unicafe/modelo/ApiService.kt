@@ -1,8 +1,8 @@
 package com.example.unicafe.modelo
 
 import com.example.unicafe.modelo.dto.LoginResponse
-import com.example.unicafe.modelo.dto.Producto
 import com.example.unicafe.modelo.dto.RegisterResponse
+import com.example.unicafe.modelo.dto.Producto
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -19,7 +19,7 @@ interface ApiService {
     ): Call<LoginResponse>
 
     @FormUrlEncoded
-    @POST("api_registro_usuario.php")
+    @POST("api_registro.php")
     fun registrarUsuario(
         @Field("nombre") nombre: String,
         @Field("aPaterno") aPaterno: String,
