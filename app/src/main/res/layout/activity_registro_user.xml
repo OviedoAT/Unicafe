@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vista.RegistroUser">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/Logo"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/logo_unicafe"/>
+
+            <TextView
+                android:id="@+id/txtTítulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UNICAFE"
+                android:layout_gravity="center"
+                android:textSize="25dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="160dp"/>
+
+
+            <Button
+                android:id="@+id/btnMenuRegis"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/menu"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrate"
+                android:textSize="30dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#EDCEA1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center|top">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre:"
+                    android:textSize="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxNombre"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Apellido Paterno:"
+                    android:textSize="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxApePaterno"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Apellido Materno:"
+                    android:textSize="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxApeMaterno"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usuario:"
+                    android:textSize="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxUser"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email:"
+                    android:textSize="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxEmail"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono:"
+                    android:textSize="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxTel"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contraseña:"
+                    android:textSize="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"/>
+                <EditText
+                    android:id="@+id/txtboxPass"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|top">
+
+                <Button
+                    android:id="@+id/btnCleanRegistrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="Limpiar"/>
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="Guardar"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

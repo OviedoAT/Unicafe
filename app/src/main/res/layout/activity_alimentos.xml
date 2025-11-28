@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vista.Alimentos">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgLogoAliment"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/logo_unicafe"/>
+
+            <TextView
+                android:id="@+id/txtTiuloAliment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UNICAFE"
+                android:layout_gravity="center"
+                android:textSize="25dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="120dp"/>
+
+            <Button
+                android:id="@+id/btnComprasAlimen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/shopping_car"/>
+
+            <Button
+                android:id="@+id/btnMenuAlimen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/menu"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCombos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Combos"/>
+            <Button
+                android:id="@+id/btnPromos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Promos"/>
+            <Button
+                android:id="@+id/btnTrending"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Trending"/>
+            <Button
+                android:id="@+id/btnComidaCal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Comida Caliente"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Combos"
+                android:textSize="25dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCombos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Promos"
+                android:textSize="25dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerPromos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trending"
+                android:textSize="25dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerTrending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
