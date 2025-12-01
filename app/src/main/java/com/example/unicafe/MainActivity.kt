@@ -1,7 +1,9 @@
 package com.example.unicafe
 
-
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -32,44 +34,36 @@ class MainActivity : AppCompatActivity(), AuthContrato.Vista {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Ajuste de insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val s = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(s.left, s.top, s.right, s.bottom)
             insets
         }
 
-        // MVP
         presentador = AuthPresentador(this)
 
-        // Referencias a vistas
         layoutBlurred = findViewById(R.id.layoutBlurred)
         txtUsuario = findViewById(R.id.txtboxUsuario)
         txtPassword = findViewById(R.id.txtboxUserContra)
         btnInicioSesion = findViewById(R.id.btnInicioSesion)
         btnIrRegistro = findViewById(R.id.btnIrRegistro)
 
-        // Login
         btnInicioSesion.setOnClickListener {
             val correo = txtUsuario.text.toString().trim()
             val pass = txtPassword.text.toString().trim()
 
             if (correo.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Ingresa usuario y contraseña", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             presentador.login(correo, pass)
         }
 
-        // Ir a registro
         btnIrRegistro.setOnClickListener {
-            val intent = Intent(this@MainActivity, RegistroUser::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RegistroUser::class.java))
         }
     }
-
-    // === Implementación de AuthContrato.Vista ===
 
     override fun mostrarCargando(mostrar: Boolean) {
         btnInicioSesion.isEnabled = !mostrar
@@ -77,30 +71,19 @@ class MainActivity : AppCompatActivity(), AuthContrato.Vista {
     }
 
     override fun mostrarLoginExitoso(usuario: LoginResponse) {
-        Toast.makeText(
-            this,
-            "Bienvenido ${usuario.nombreCompleto ?: ""}",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        val intent = Intent(this@MainActivity, Alimentos::class.java)
-        // Si quieres pasar datos del usuario:
-        intent.putExtra("ID_USUARIO", usuario.idUsuario ?: -1)
+        Toast.makeText(this, "Bienvenido ${usuario.nombreCompleto}", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, Alimentos::class.java)
+        intent.putExtra("ID_USUARIO", usuario.idUsuario)
         startActivity(intent)
-        finish() // para que no puedan volver al login con back
+        finish()
     }
 
     override fun mostrarErrorLogin(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show()
     }
 
-    override fun mostrarRegistroExitoso(mensaje: String) {
-        // No se usa en esta pantalla
-    }
-
-    override fun mostrarErrorRegistro(mensaje: String) {
-        // No se usa en esta pantalla
-    }
+    override fun mostrarRegistroExitoso(mensaje: String) {}
+    override fun mostrarErrorRegistro(mensaje: String) {}
 
     override fun onDestroy() {
         presentador.onDestroy()

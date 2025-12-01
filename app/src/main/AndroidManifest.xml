@@ -1,43 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Permiso para usar Internet (Retrofit / API) -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.Unicafe"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Unicafe">
+        android:label="@string/app_name">
 
-        <!-- Pantalla de detalles de un producto -->
-        <activity
-            android:name=".vista.DetallesAlimentos"
-            android:exported="false" />
+        <activity android:name=".vista.DetallesAlimentos" />
+        <activity android:name=".vista.RegistroUser" />
+        <activity android:name=".vista.Alimentos" />
 
-        <!-- Pantalla de registro de usuario -->
-        <activity
-            android:name=".vista.RegistroUser"
-            android:exported="false" />
-
-        <!-- Pantalla de lista de alimentos -->
-        <activity
-            android:name=".vista.Alimentos"
-            android:exported="false" />
-
-        <!-- Pantalla de login (principal) -->
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
     </application>

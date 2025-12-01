@@ -1,5 +1,6 @@
 package com.example.unicafe.vista
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,47 +12,46 @@ import com.example.unicafe.R
 import com.example.unicafe.modelo.dto.Producto
 
 class ProductoAdapter(
-    private var listaProductos: List<Producto>,
-    private val onProductoClick: (Producto) -> Unit
+    private var productos: List<Producto>
 ) : RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder>() {
 
     inner class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imgProducto: ImageView = itemView.findViewById(R.id.img)
+        val imgProducto: ImageView = itemView.findViewById(R.id.imgProducto)
         val txtNombre: TextView = itemView.findViewById(R.id.txtNombreProducto)
-        val txtPrecio: TextView = itemView.findViewById(R.id.txt)
-
-        fun bind(producto: Producto) {
-            txtNombre.text = producto.nombre
-            txtPrecio.text = "$${producto.precio}"
-
-            // Cargar imagen con Glide (asegúrate de tener Glide en tu build.gradle)
-            Glide.with(itemView.context)
-                .load(producto.imagen)
-                .placeholder(R.drawable.ic_placeholder) // Imagen por defecto
-                .error(R.drawable.ic_error) // Imagen si hay error
-                .into(imgProducto)
-
-            // Configurar click listener
-            itemView.setOnClickListener {
-                onProductoClick(producto)
-            }
-        }
+        val txtPrecio: TextView = itemView.findViewById(R.id.txtPrecioProducto)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_alimentos, parent, false)
+            .inflate(R.layout.item_producto, parent, false)
         return ProductoViewHolder(view)
     }
 
+    override fun getItemCount(): Int = productos.size
+
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        holder.bind(listaProductos[position])
+        val producto = productos[position]
+        val ctx = holder.itemView.context
+
+        holder.txtNombre.text = producto.nombre
+        holder.txtPrecio.text = String.format("$ %.2f", producto.precio)
+
+        Glide.with(ctx)
+            .load(producto.url_imagen)
+            .into(holder.imgProducto)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(ctx, DetallesAlimentos::class.java)
+            intent.putExtra("NOMBRE", producto.nombre)
+            intent.putExtra("DESCRIPCION", producto.descripcion)
+            intent.putExtra("PRECIO", producto.precio)
+            intent.putExtra("IMAGEN_URL", producto.url_imagen)
+            ctx.startActivity(intent)
+        }
     }
 
-    override fun getItemCount(): Int = listaProductos.size
-
     fun actualizarDatos(nuevaLista: List<Producto>) {
-        listaProductos = nuevaLista
+        productos = nuevaLista
         notifyDataSetChanged()
     }
 }

@@ -8,7 +8,6 @@ object ApiClient {
     private const val BASE_URL =
         "https://david.b-corpsolutions.com/bcorpsov/UNICAFEv2/api_movil/"
 
-    // 👇 especificamos explícitamente el tipo para que lazy no se queje
     val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
