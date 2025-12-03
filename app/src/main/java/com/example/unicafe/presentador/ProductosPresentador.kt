@@ -20,6 +20,18 @@ class ProductosPresentador(
         }
     }
 
+    override fun cargarProductosPorCategoria(categoria: String) {
+        vista?.mostrarCargando(true)
+        modelo.obtenerProductosPorCategoria(categoria) { ok, lista, error ->
+            vista?.mostrarCargando(false)
+            if (ok && lista != null) {
+                vista?.mostrarProductos(lista)
+            } else {
+                vista?.mostrarError(error ?: "No se pudieron cargar los productos de $categoria")
+            }
+        }
+    }
+
     override fun onDestroy() {
         vista = null
     }

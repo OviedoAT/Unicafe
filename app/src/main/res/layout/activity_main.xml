@@ -56,10 +56,11 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/textoLogin"
                 android:textSize="17dp"
-                android:text="Ingresa tu usuario:" />
+                android:text="Ingresa tu email:" />
 
             <EditText
                 android:id="@+id/txtboxUsuario"
+                android:textColor="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -73,6 +74,7 @@
 
             <EditText
                 android:id="@+id/txtboxUserContra"
+                android:textColor="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="15dp"/>

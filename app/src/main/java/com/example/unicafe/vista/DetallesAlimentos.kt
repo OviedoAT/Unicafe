@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,65 +17,75 @@ import com.example.unicafe.R
 
 class DetallesAlimentos : AppCompatActivity() {
 
-    private lateinit var btnShopDetailAliments: Button
-    private lateinit var btnMenuDetailAliements: Button
-    private lateinit var imgDetailAliments: ImageView
-    private lateinit var txtNombDetailAliments: TextView
-    private lateinit var txtPrecioDetailAliments: TextView
-    private lateinit var txtDescripDetailAliments: TextView
-    private lateinit var btnOrdenarDetailAliments: Button
+    private lateinit var imgProductoDet: ImageView
+    private lateinit var txtNombreDet: TextView
+    private lateinit var txtDescripcionDet: TextView
+    private lateinit var txtPrecioDet: TextView
+
+    private lateinit var btnMenuDet: Button
+    private lateinit var btnComprasDet: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalles_alimentos)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, ins ->
-            val s = ins.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(s.left, s.top, s.right, s.bottom)
-            ins
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
-        btnShopDetailAliments = findViewById(R.id.btnShopDetailAliments)
-        btnMenuDetailAliements = findViewById(R.id.btnMenuDetailAliements)
-        imgDetailAliments = findViewById(R.id.imgDetailAliments)
-        txtNombDetailAliments = findViewById(R.id.txtNombDetailAliments)
-        txtPrecioDetailAliments = findViewById(R.id.txtPrecioDetailAliments)
-        txtDescripDetailAliments = findViewById(R.id.txtDescripDetailAliments)
-        btnOrdenarDetailAliments = findViewById(R.id.btnOrdenarDetailAliments)
+        imgProductoDet = findViewById(R.id.imgDetailAliments)
+        txtNombreDet = findViewById(R.id.txtNombDetailAliments)
+        txtDescripcionDet = findViewById(R.id.txtDescripDetailAliments)
+        txtPrecioDet = findViewById(R.id.txtPrecioDetailAliments)
 
-        val nombre = intent.getStringExtra("NOMBRE") ?: "Producto"
-        val descripcion = intent.getStringExtra("DESCRIPCION") ?: ""
-        val precio = intent.getDoubleExtra("PRECIO", 0.0)
-        val urlImagen = intent.getStringExtra("IMAGEN_URL")
+        btnMenuDet = findViewById(R.id.btnMenuDetailAliements)
+        btnComprasDet = findViewById(R.id.btnShopDetailAliments)
 
-        txtNombDetailAliments.text = nombre
-        txtDescripDetailAliments.text = descripcion
-        txtPrecioDetailAliments.text = String.format("$ %.2f", precio)
+        val idProducto = intent.getIntExtra("idProducto", -1)
+        val nombre = intent.getStringExtra("nombre") ?: ""
+        val descripcion = intent.getStringExtra("descripcion") ?: ""
+        val precio = intent.getDoubleExtra("precio", 0.0)
+        val urlImagen = intent.getStringExtra("url_imagen")
 
-        Glide.with(this)
-            .load(urlImagen)
-            .into(imgDetailAliments)
+        if (idProducto == -1) {
+            Toast.makeText(this, "No se recibieron datos del producto", Toast.LENGTH_LONG).show()
+        }
 
-        btnOrdenarDetailAliments.setOnClickListener {
+        txtNombreDet.text = nombre
+        txtDescripcionDet.text = descripcion
+        txtPrecioDet.text = "$${String.format("%.2f", precio)}"
+
+        if (!urlImagen.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(urlImagen)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(imgProductoDet)
+        } else {
+            imgProductoDet.setImageResource(R.mipmap.ic_launcher)
+        }
+
+        btnMenuDet.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("Orden realizada")
-                .setMessage("Tu orden de $nombre ha sido enviada.")
-                .setPositiveButton("Aceptar", null)
+                .setTitle("Menú")
+                .setItems(arrayOf("Volver a alimentos", "Cerrar sesión")) { _, option ->
+                    when (option) {
+                        0 -> finish()
+                        1 -> {
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
                 .show()
         }
 
-        btnMenuDetailAliements.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Menú")
-                .setItems(arrayOf("Continuar comprando", "Cerrar sesión")) { _, option ->
-                    if (option == 0) {
-                        startActivity(Intent(this, Alimentos::class.java))
-                    } else {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }
-                }.show()
+        btnComprasDet.setOnClickListener {
+            Toast.makeText(this, "Carrito aún no implementado", Toast.LENGTH_SHORT).show()
         }
     }
 }

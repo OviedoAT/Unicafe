@@ -1,5 +1,6 @@
 package com.example.unicafe.modelo
 
+import com.example.unicafe.api.ApiService
 import com.example.unicafe.contrato.AuthContrato
 import com.example.unicafe.modelo.dto.LoginResponse
 import com.example.unicafe.modelo.dto.RegisterResponse

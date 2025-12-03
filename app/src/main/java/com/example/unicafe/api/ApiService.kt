@@ -1,4 +1,4 @@
-package com.example.unicafe.modelo
+package com.example.unicafe.api
 
 import com.example.unicafe.modelo.dto.LoginResponse
 import com.example.unicafe.modelo.dto.RegisterResponse
@@ -8,6 +8,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -32,4 +33,10 @@ interface ApiService {
 
     @GET("api_listar_productos.php")
     fun obtenerProductos(): Call<List<Producto>>
+
+    @GET("api_listar_productos.php")
+    fun obtenerProductosPorCategoria(
+        @Query("categoria") categoria: String
+    ): Call<List<Producto>>
 }
+

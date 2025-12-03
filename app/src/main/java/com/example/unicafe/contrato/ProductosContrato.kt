@@ -11,11 +11,17 @@ interface ProductosContrato {
 
     interface Presentador {
         fun cargarProductos()
+        fun cargarProductosPorCategoria(categoria: String)
         fun onDestroy()
     }
 
     interface Model {
         fun obtenerProductos(
+            callback: (Boolean, List<Producto>?, String?) -> Unit
+        )
+
+        fun obtenerProductosPorCategoria(
+            categoria: String,
             callback: (Boolean, List<Producto>?, String?) -> Unit
         )
     }

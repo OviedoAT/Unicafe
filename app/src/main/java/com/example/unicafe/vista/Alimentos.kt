@@ -2,6 +2,7 @@ package com.example.unicafe.vista
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -26,13 +27,8 @@ class Alimentos : AppCompatActivity(), ProductosContrato.Vista {
     private lateinit var btnTrending: Button
     private lateinit var btnComidaCal: Button
 
-    private lateinit var recyclerCombos: RecyclerView
-    private lateinit var recyclerPromos: RecyclerView
-    private lateinit var recyclerTrending: RecyclerView
-
-    private lateinit var adapterCombos: ProductoAdapter
-    private lateinit var adapterPromos: ProductoAdapter
-    private lateinit var adapterTrending: ProductoAdapter
+    private lateinit var recyclerAlimentos: RecyclerView
+    private lateinit var adapterAlimentos: ProductoAdapter
 
     private lateinit var presentador: ProductosPresentador
 
@@ -41,36 +37,30 @@ class Alimentos : AppCompatActivity(), ProductosContrato.Vista {
         enableEdgeToEdge()
         setContentView(R.layout.activity_alimentos)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, ins ->
-            val s = ins.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(s.left, s.top, s.right, s.bottom)
-            ins
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
         presentador = ProductosPresentador(this)
 
         btnComprasAlimen = findViewById(R.id.btnComprasAlimen)
         btnMenuAlimen = findViewById(R.id.btnMenuAlimen)
+
         btnCombos = findViewById(R.id.btnCombos)
         btnPromos = findViewById(R.id.btnPromos)
         btnTrending = findViewById(R.id.btnTrending)
         btnComidaCal = findViewById(R.id.btnComidaCal)
 
-        recyclerCombos = findViewById(R.id.recyclerCombos)
-        recyclerPromos = findViewById(R.id.recyclerPromos)
-        recyclerTrending = findViewById(R.id.recyclerTrending)
+        recyclerAlimentos = findViewById(R.id.recyclerCombos)
+        recyclerAlimentos.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        recyclerCombos.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        recyclerPromos.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        recyclerTrending.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-
-        adapterCombos = ProductoAdapter(emptyList())
-        adapterPromos = ProductoAdapter(emptyList())
-        adapterTrending = ProductoAdapter(emptyList())
-
-        recyclerCombos.adapter = adapterCombos
-        recyclerPromos.adapter = adapterPromos
-        recyclerTrending.adapter = adapterTrending
+        adapterAlimentos = ProductoAdapter(emptyList()) { producto ->
+            irADetalles(producto)
+        }
+        recyclerAlimentos.adapter = adapterAlimentos
 
         btnMenuAlimen.setOnClickListener {
             AlertDialog.Builder(this)
@@ -78,25 +68,69 @@ class Alimentos : AppCompatActivity(), ProductosContrato.Vista {
                 .setItems(arrayOf("Seguir comprando", "Cerrar sesión")) { _, option ->
                     if (option == 1) {
                         val intent = Intent(this, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()
                     }
-                }.show()
+                }
+                .show()
         }
+
+        btnComprasAlimen.setOnClickListener {
+            Toast.makeText(this, "Carrito de compras aún no implementado", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+        configurarBotonesCategoria()
 
         presentador.cargarProductos()
     }
 
-    override fun mostrarCargando(mostrar: Boolean) {}
+    private fun configurarBotonesCategoria() {
+
+        btnCombos.setOnClickListener {
+            presentador.cargarProductosPorCategoria("combos")
+        }
+
+        btnPromos.setOnClickListener {
+            presentador.cargarProductosPorCategoria("snacks")
+        }
+
+        btnTrending.setOnClickListener {
+            presentador.cargarProductosPorCategoria("Postres")
+        }
+
+        btnComidaCal.setOnClickListener {
+            presentador.cargarProductosPorCategoria("Comidas")
+        }
+    }
+
+
+    override fun mostrarCargando(mostrar: Boolean) {
+    }
 
     override fun mostrarProductos(lista: List<Producto>) {
-        adapterCombos.actualizarDatos(lista)
-        adapterPromos.actualizarDatos(lista)
-        adapterTrending.actualizarDatos(lista)
+        adapterAlimentos.actualizarDatos(lista)
     }
 
     override fun mostrarError(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presentador.onDestroy()
+    }
+
+
+    private fun irADetalles(producto: Producto) {
+        val intent = Intent(this, DetallesAlimentos::class.java).apply {
+            putExtra("idProducto", producto.idProducto)
+            putExtra("nombre", producto.nombre)
+            putExtra("descripcion", producto.descripcion)
+            putExtra("precio", producto.precio)
+            putExtra("url_imagen", producto.url_imagen)
+        }
+        startActivity(intent)
     }
 }
